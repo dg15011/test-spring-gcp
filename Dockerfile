@@ -8,6 +8,6 @@ RUN gradle build --no-daemon -x test
 # Etapa 2: Crear la imagen final
 FROM eclipse-temurin:21-jre
 WORKDIR /app
-COPY --from=builder /app/build/libs/*.jar test.jar
+COPY --from=builder /app/build/libs/test-0.0.1-SNAPSHOT.jar test.jar
 EXPOSE 8080
 ENTRYPOINT ["java", "-jar", "test.jar"]
