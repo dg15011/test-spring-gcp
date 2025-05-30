@@ -1,0 +1,24 @@
+# Configuracion del servidor
+server:
+  port: 8080  # Puerto donde corre la aplicacion (por defecto 8080).
+  servlet:
+    context-path: /api/v1  # Ruta base para las APIs (opcional, ej: /api/v1).
+
+spring:
+  application:
+    name: test_gcp
+
+  # Configuracion de logging
+  logging:
+    level:
+      root: INFO  # Nivel de logging general.
+      com.example.test: DEBUG  # Nivel de logging para tu paquete (otil para depuracion).
+
+  # Configuracion de Actuator (monitoreo)
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,metrics  # Endpoints de Actuator habilitados (ej: /actuator/health).
+
+

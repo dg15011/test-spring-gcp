@@ -1,0 +1,21 @@
+steps:
+  # Construir la imagen de contenedor
+  - name: 'gcr.io/cloud-builders/docker'
+    args: ['build', '-t', 'us-central1-docker.pkg.dev/prueba-test-spring/test-spring-gc/my-spring-boot-app:$COMMIT_SHA', '.']
+  # Enviar la imagen a Artifact Registry
+  - name: 'gcr.io/cloud-builders/docker'
+    args: ['push', 'us-central1-docker.pkg.dev/prueba-test-spring/test-spring-gc/my-spring-boot-app:$COMMIT_SHA']
+  # Desplegar la imagen en Cloud Run
+  - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
+    entrypoint: gcloud
+    args:
+      - 'run'
+      - 'deploy'
+      - 'spring-boot-service'
+      - '--image'
+      - 'us-central1-docker.pkg.dev/prueba-test-spring/test-spring-gc/my-spring-boot-app:$COMMIT_SHA'
+      - '--region'
+      - 'us-central1'
+      - '--allow-unauthenticated'
+images:
+  - 'us-central1-docker.pkg.dev/prueba-test-spring/test-spring-gc/my-spring-boot-app:$COMMIT_SHA'
